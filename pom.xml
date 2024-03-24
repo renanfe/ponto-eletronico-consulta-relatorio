@@ -8,8 +8,8 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>br.com.fiap</groupId>
-  <artifactId>ponto.eletronico.consulta.relatorio</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>ponto-eletronico-consulta-relatorio</artifactId>
+  <version>0.0.1</version>
   <name>ponto.eletronico.consulta.relatorio</name>
   <description>API para ponto eletronico de consulta e relatorio</description>
 
