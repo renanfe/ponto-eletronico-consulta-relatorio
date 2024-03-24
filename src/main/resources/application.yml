@@ -1,3 +1,17 @@
+server:
+  servlet:
+    context-path: "/api"
 spring:
-  application:
-    name: ponto-eletronico-registro
+  mail:
+     host: ${EMAIL_HOST}
+     port: ${EMAIL_PORT}
+     username: ${EMAIL_USERNAME}
+     password: ${EMAIL_PASSWORD}
+     properties:
+       mail:
+         smtp:
+           auth: true
+           starttls:
+             enable: true
+mail:
+  from: ${EMAIL_FROM}
