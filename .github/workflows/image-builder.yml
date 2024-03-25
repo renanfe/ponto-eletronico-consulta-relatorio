@@ -11,6 +11,10 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  AWS_REGION: "us-east-1"
+  DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/api-ponto-eletronico-consulta-relatorio:${{ github.sha }}
+
 jobs:
   build:
 
@@ -45,4 +49,21 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api-ponto-eletronico-consulta-relatorio:latest
+          tags: ${{ env.DOCKER_IMAGE }}
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: ECS Deploy Service
+        uses: donaldpiret/ecs-deploy@master
+        with:
+          cluster: "Ponto-Eletronico"
+          target: ponto-eletronico-consulta
+          image: consulta ${{ env.DOCKER_IMAGE }}
